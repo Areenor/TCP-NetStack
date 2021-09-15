@@ -1,7 +1,7 @@
 NOTE: SOME OF THE CODE IS THE PROPERTY OF THE Vrije University of Amsterdam AND NOT PRODUCED BY ME
 
 # TCP Netstack
-ICMP protocol over IP, CP protocol with the 3-way handshake connection establishmentand data transfer adhered to BSD socket semantics of the networking API calls.
+ICMP protocol over IP, TCP protocol with the 3-way handshake connection establishmentand data transfer adhered to BSD socket semantics of the networking API calls.
 
 
 ## Code 
