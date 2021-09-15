@@ -1,11 +1,11 @@
-./# Advanced Network Programming (ANP) Skeleton 
+NOTE: SOME OF THE CODE IS THE PROPERTY OF THE Vrije University of Amsterdam AND NOT PRODUCED BY ME
 
-ANP skeleton is the basic skeleton code used in the ANP course for developing your 
-own networking stack. 
+./# TCP Netstack
+ICMP protocol over IP, CP protocol with the 3-way handshake connection establishmentand data transfer adhered to BSD socket semantics of the networking API calls
+
 
 ## Code 
-Corresponding to the figure 3 in the accompanying assignment, here is a brief 
-overview of the various files in this project 
+Here is a brief overview of the various files in this project 
 
   * anp_netdev.[ch] : implements the application privide network interface with 10.0.0.4 IP address 
   * anpwrapper.[ch] : shared library wrapper code that provides hooks for socket, connect, send, recv, and close calls. 
@@ -24,11 +24,6 @@ overview of the various files in this project
   * tap_netdev.[ch] : implementation for sending/receiving packets on the TAP device. It is pretty standard code. 
   * timer.[ch] : A very basic timer facility implementation that can be used to register a callback to do asynchronous processing. Mostly useful in timeout conditions. 
   * utilities.[ch] : various helper routines, printing, debugging, and checksum calculation.           
-
-
-***You are given quite a bit of skeleton code as a starting point. 
-Feel free not to use or use any portion of it when developing your stack. 
-You have complete freedom***  
   
  ## How to build 
  
@@ -54,67 +49,3 @@ You have complete freedom***
   2. Disable IPv6 
   3. Setup packet forwarding rules
  
-  
- ## To run ARP setup 
- Make and install the libanpnetstack library. Then run `./sh-run-arpserver.sh` and follow instructions from there. Example 
- 
- ```bash
- atr@atr:~/anp-netskeleton/bin$ ./sh-run-arpserver.sh 
- ++ gcc ./arpdummy.c -o arpdummy
- ++ set +x
- -------------------------------------------
- The ANP netstack is ready, now try this:
-  1. [terminal 1] ./sh-hack-anp.sh ./arpdummy
-  2. [terminal 2] try running arping 10.0.0.4
- 
- atr@atr:~/anp-netskeleton/bin$ sudo ./sh-hack-anp.sh ./arpdummy
- [sudo] password for atr: 
- + prog=./arpdummy
- + shift
- + LD_PRELOAD=/usr/local/lib/libanpnetstack.so ./arpdummy
- Hello there, I am ANP networking stack!
- tap device OK, tap0 
- Executing : ip link set dev tap0 up 
- OK: device should be up now, 10.0.0.0/24 
- Executing : ip route add dev tap0 10.0.0.0/24 
- OK: setting the device route, 10.0.0.0/24 
- Executing : ip address add dev tap0 local 10.0.0.5 
- OK: setting the device address 10.0.0.5 
- GXXX  0.0.0.0
- GXXX  0.0.0.0
- GXXX  10.0.0.5
- [ARP] A new entry for 10.0.0.5
- ARP an entry updated 
- ARP an entry updated 
- ^C
- atr@atr:~/anp-netskeleton/bin$
-  ```
-From a second terminal 
-  
-```bash
-atr@atr:~/home/atr$ arping -I tap0 10.0.0.4 
-ARPING 10.0.0.4 from 10.0.0.5 tap0
-Unicast reply from 10.0.0.4 [??:??:??:??:??]  0.728ms
-Unicast reply from 10.0.0.4 [??:??:??:??:??]  0.922ms
-Unicast reply from 10.0.0.4 [??:??:??:??:??]  1.120ms
-^CSent 3 probes (1 broadcast(s))
-Received 3 response(s) 
-```
-In place of [??:??:??:??:??] you should see an actual mac address for the TAP device. 
-
-## Getting started with hijacking socket call 
-
-  * Step 1: run the TCP server in one terminal with a specific IP and port number 
-  * Step 2: run the TCP client in another terminal, and first check if they connect, run, and pass the buffer matching test.
-  
- Then, you can run your client with the `./bin/sh-hack-anp.sh` script as 
- ```bash
- sudo [path_to_anp]/bin/sh-hack-anp.sh [path]/bin/anp_client IP port 
-``` 
-
-In case you have some non-standard installation path, please 
-update the path `/usr/local/lib/libanpnetstack.so` in the `sh-hack-anp.sh` script.
-
-
-## Author 
-Animesh Trivedi (for the ANP course) 
